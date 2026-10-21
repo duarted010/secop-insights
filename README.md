@@ -92,6 +92,22 @@ push (GitHub Actions with a Postgres service).
 
 See [`docs/FINDINGS.md`](docs/FINDINGS.md). It is generated from real data by `python -m analysis.report`.
 
+## Project status
+
+What works and what doesn't yet, as of the first commit.
+
+**Succeeded**
+- Full pipeline runs end to end: extract, transform, load into PostgreSQL, SQL models, quality checks, API.
+- All 9 tests pass (unit tests for the transform plus an end-to-end test against PostgreSQL).
+- Built on the real SECOP II column names, checked against the live dataset schema on datos.gov.co.
+- PII removal works: the quality check fails the run if a personal name reaches the database.
+- Offline demo with the synthetic fixture works without internet.
+
+**Failed / not done yet**
+- No real data loaded yet. The build environment's network blocked datos.gov.co, so everything was tested on synthetic records. `docs/FINDINGS.md` and the charts still need to be generated with a local run.
+- CI is not active. The GitHub Actions workflow (`.github/workflows`) was not included in the web upload, so nothing runs on push yet.
+- `.env.example` is also missing from the upload (hidden files were skipped), so `cp .env.example .env` fails until it is added.
+
 ## Next steps
 
 - Schedule daily incremental runs (cron / GitHub Actions / Airflow).
